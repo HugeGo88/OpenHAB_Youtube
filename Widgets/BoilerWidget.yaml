@@ -1,0 +1,303 @@
+uid: boiler_small
+tags: []
+props:
+  parameters:
+    - description: Title
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - context: item
+      description: Temperature sensor at top
+      label: Temp Top
+      name: item_top
+      required: false
+      type: TEXT
+    - context: item
+      description: Temperature sensor in the middle
+      label: Temp Middle
+      name: item_middle
+      required: false
+      type: TEXT
+    - context: item
+      description: Temperature sensor at bottom
+      label: Temp Bottom
+      name: item_bottom
+      required: false
+      type: TEXT
+    - context: item
+      description: Switch which shows if heating is on or off
+      label: Heating on/off
+      name: item_heat
+      required: false
+      type: TEXT
+    - context: item
+      description: Temperature sensor at boiler top
+      label: Temp Top Boiler
+      name: item_top_boiler
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Feb 18, 2023, 11:36:37 AM
+component: f7-card
+config:
+  title: =props.title
+slots:
+  default:
+    - component: f7-block
+      config:
+        style:
+          align-items: start
+          background: url(/static/boiler.png)
+          background-position: right bottom
+          background-size: cover
+          display: flex
+          flex-direction: column
+          max-height: 180px
+          max-width: 120px
+          min-height: 180px
+          min-width: 120px
+      slots:
+        default:
+          - component: f7-row
+            config:
+              class:
+                - display-flex
+                - justify-content-space-between
+                - align-content-stretch
+                - align-items-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-left
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          color: '=(items[props.item_top].state.split(".")[0] < 50) ? "blue" : ((items[props.item_top].state.split(".")[0] < 60) ? "orange" : "red")'
+                          f7: square_fill
+                          size: 60
+                          style:
+                            filter: opacity(50%)
+                            left: 18px
+                            top: 10px
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-right
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems: =[props.item_top]
+                          color: '=(items[props.item_top].state.split(".")[0] < 50) ? "blue" : ((items[props.item_top].state.split(".")[0] < 60) ? "orange" : "red")'
+                          style:
+                            font-size: 14px
+                            font-weight: bold
+                            left: 30px
+                            top: 10px
+                          text: =items[props.item_top].state
+          - component: f7-row
+            config:
+              class:
+                - display-flex
+                - justify-content-space-between
+                - align-content-stretch
+                - align-items-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-left
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          color: '=(items[props.item_middle].state.split(".")[0] < 50) ? "blue" : ((items[props.item_middle].state.split(".")[0] < 60) ? "orange" : "red")'
+                          f7: square_fill
+                          size: 60
+                          style:
+                            filter: opacity(50%)
+                            left: 18px
+                            top: 2px
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-right
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems: =[props.item_middle]
+                          color: '=(items[props.item_middle].state.split(".")[0] < 50) ? "blue" : ((items[props.item_middle].state.split(".")[0] < 60) ? "orange" : "red")'
+                          style:
+                            font-size: 14px
+                            font-weight: bold
+                            left: 30px
+                            top: 2px
+                          text: =items[props.item_middle].state
+          - component: f7-row
+            config:
+              class:
+                - display-flex
+                - justify-content-space-between
+                - align-content-stretch
+                - align-items-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-left
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          color: '=(items[props.item_bottom].state.split(".")[0] < 50) ? "blue" : ((items[props.item_bottom].state.split(".")[0] < 60) ? "orange" : "red")'
+                          f7: square_fill
+                          size: 60
+                          style:
+                            filter: opacity(50%)
+                            left: 18px
+                            top: -6px
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-right
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems: =[props.item_bottom]
+                          color: '=(items[props.item_bottom].state.split(".")[0] < 50) ? "blue" : ((items[props.item_bottom].state.split(".")[0] < 60) ? "orange" : "red")'
+                          style:
+                            font-size: 14px
+                            font-weight: bold
+                            left: 30px
+                            top: -6px
+                          text: =items[props.item_bottom].state
+    - component: f7-block
+      config:
+        style:
+          align-items: start
+          background: url(/static/boiler.png)
+          background-position: right bottom
+          background-size: cover
+          display: flex
+          flex-direction: column
+          max-height: 180px
+          max-width: 120px
+          min-height: 180px
+          min-width: 120px
+      slots:
+        default:
+          - component: f7-row
+            config:
+              class:
+                - display-flex
+                - justify-content-space-between
+                - align-content-stretch
+                - align-items-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-left
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          color: '=(items[props.item_top_boiler].state.split(".")[0] < 40) ? "blue" : ((items[props.item_top].state.split(".")[0] < 60) ? "orange" : "red")'
+                          f7: rectangle_fill
+                          size: 60
+                          style:
+                            filter: opacity(50%)
+                            left: 18px
+                            top: 25px
+                            transform: rotate(90deg)
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-right
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems: =[props.item_top_boiler]
+                          color: '=(items[props.item_top_boiler].state.split(".")[0] < 40) ? "blue" : ((items[props.item_top].state.split(".")[0] < 60) ? "orange" : "red")'
+                          style:
+                            font-size: 14px
+                            font-weight: bold
+                            left: 30px
+                            top: 25px
+                          text: =items[props.item_top_boiler].state
+          - component: f7-row
+            config:
+              class:
+                - display-flex
+                - justify-content-space-between
+                - align-content-stretch
+                - align-items-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-left
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          color: '=(items[props.item_heat].state === "ON") ? "red" : "gray"'
+                          f7: rectangle_fill
+                          size: 60
+                          style:
+                            filter: opacity(50%)
+                            left: 18px
+                            top: 25px
+                            transform: rotate(90deg)
+                - component: f7-col
+                  config:
+                    class:
+                      - display-flex
+                      - flex-direction-column
+                      - align-items-right
+                  slots:
+                    default:
+                      - component: oh-link
+                        config:
+                          action: analyzer
+                          actionAnalyzerItems: =[props.item_heat]
+                          color: '=(items[props.item_heat].state === "ON") ? "red" : "gray"'
+                          style:
+                            font-size: 14px
+                            font-weight: bold
+                            left: 30px
+                            top: 25px
+                          text: =items[props.item_heat].state
