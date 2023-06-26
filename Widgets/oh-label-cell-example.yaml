@@ -1,0 +1,13 @@
+component: oh-label-cell
+config:
+  action: analyzer
+  actionAnalyzerChartType: year
+  actionAnalyzerCoordSystem: calendar
+  actionAnalyzerItems:
+    - gTemperature
+  actionPage: page:DurchschnittTemp
+  footer: Temperatur
+  header: Durchschnitt
+  icon: "f7: thermometer"
+  item: gTemperature
+  trendItem: gTemperature
