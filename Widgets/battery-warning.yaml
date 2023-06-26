@@ -1,0 +1,85 @@
+uid: battery_status
+tags: []
+props:
+  parameters:
+    - context: item
+      description: Group:Switch:OR(ON, OFF) Item that aggregates all the battery low warning
+      label: Battery warnings Item
+      name: batteryWarning
+      required: true
+      type: TEXT
+      filterCriteria:
+        - value: Group
+          name: type
+  parameterGroups: []
+timestamp: Dec 3, 2022, 5:58:03 PM
+component: f7-card
+config:
+  style:
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    margin-left: 5px
+    margin-right: 5px
+    noShadow: false
+    padding: 0px
+  title: Battery status
+slots:
+  default:
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: row
+          position: absolute
+          right: 0px
+          top: 0px
+      slots:
+        default:
+          - component: oh-button
+            config:
+              action: variable
+              actionVariable: filterOn
+              actionVariableValue: "=vars.filterOn == false ? true : false"
+              color: black
+              iconF7: eye_fill
+              outline: false
+              round: true
+              style:
+                margin-right: -10px
+                margin-top: 5px
+                width: 50px
+              visible: "=vars.filterOn == false ? false : true"
+          - component: oh-button
+            config:
+              action: variable
+              actionVariable: filterOn
+              actionVariableValue: "=vars.filterOn == false ? true : false"
+              color: black
+              iconF7: eye_slash_fill
+              outline: false
+              round: true
+              style:
+                margin-right: -10px
+                margin-top: 5px
+                width: 50px
+              visible: "=vars.filterOn == false ? true : false"
+    - component: oh-list
+      slots:
+        default:
+          - component: oh-repeater
+            config:
+              filter: "vars.filterOn == false ? true : items[loop.item.name].state === 'ON'"
+              for: item
+              fragment: true
+              groupItem: =props.batteryWarning
+              sourceType: itemsInGroup
+            slots:
+              default:
+                - component: oh-list-item
+                  config:
+                    badge: "=(items[loop.item.name].displayState === undefined) ? loop.item.state : items[loop.item.name].displayState"
+                    badgeColor: '=loop.item.state === "ON" ? "red" : "green"'
+                    icon: '=loop.item.state === "ON" ? "f7:battery_0" : "f7:battery_100"'
+                    iconColor: '=loop.item.state === "ON" ? "red" : "green"'
+                    item: =loop.item.name
+                    title: =(loop.item.label).replace('Battery level ','')
