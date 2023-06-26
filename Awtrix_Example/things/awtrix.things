@@ -1,0 +1,11 @@
+Bridge mqtt:broker:myBroker [ host="192.168.178.200", secure=false ]
+
+Thing mqtt:topic:awtrix "Awtrix" (mqtt:broker:myBroker) {
+    Channels:
+    Type string : currentApp "Aktuelle App" [ stateTopic="awtrix_6ff9b8/currentApp" ]
+    Type switch : display "Display" [ commandTopic="awtrix_6ff9b8/power", on="{\"power\":true}", off="{\"power\":false}" ]
+    Type string : temp "Temp" [ commandTopic="awtrix_6ff9b8/custom/temp" ]
+    Type string : energy "Energy" [ commandTopic="awtrix_6ff9b8/custom/energy" ]
+    Type string : graph "Graph" [ commandTopic="awtrix_6ff9b8/custom/graph" ]
+    Type string : graphWeek "GraphWeek" [ commandTopic="awtrix_6ff9b8/custom/graphWeek" ]
+}   

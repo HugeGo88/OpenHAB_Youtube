@@ -1,0 +1,8 @@
+// Awtrix
+Group     gMiddleClock                               (gMiddle)
+String    MiddleClockCurrentApp    "Aktuelle app"    (gMiddleClock)    {channel="mqtt:topic:awtrix:currentApp"}
+Switch    MiddleClockDisplay       "Display"         (gMiddleClock)    {channel="mqtt:topic:awtrix:display"}
+String    MiddleClockTemp          "Temperatur"      (gMiddleClock)    {channel="mqtt:topic:awtrix:temp"}
+String    MiddleClockEnergy        "Energie"         (gMiddleClock)    {channel="mqtt:topic:awtrix:energy"}
+String    MiddleClockGraph         "Graph"           (gMiddleClock)    {channel="mqtt:topic:awtrix:graph"}
+String    MiddleClockGraphWeek     "Graph Week"      (gMiddleClock)    {channel="mqtt:topic:awtrix:graphWeek"}

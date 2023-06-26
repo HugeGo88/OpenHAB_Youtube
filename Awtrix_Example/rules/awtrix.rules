@@ -1,0 +1,63 @@
+rule "Awtrix on or off"
+when
+    Item MiddleScreenMeterCurrentWatts changed
+then
+    if(MiddleScreenMeterCurrentWatts.state > 50|W && MiddleClockDisplay.state == OFF)
+    {
+        MiddleClockDisplay.sendCommand(ON)
+    } 
+    if(MiddleScreenMeterCurrentWatts.state < 20|W && MiddleClockDisplay.state == ON)
+    {
+        MiddleClockDisplay.sendCommand(OFF)
+    }
+end
+
+
+rule "Energy change" 
+when 
+    Item UnterverteilerDeviceAccumulatedWatts changed 
+then
+    var energy = "{ \"icon\":49776, \"text\": \"" + (UnterverteilerDeviceAccumulatedWatts.state as Number).intValue.toString() + "W\"}"
+    MiddleClockEnergy.sendCommand(energy);
+
+end  
+
+rule "Temperatur change"
+when 
+    Item MiddleThermostatActualTemperature changed
+then
+    var temp = "{ \"icon\":2355, \"text\": \"" + MiddleThermostatActualTemperature.state.toString() + "\"}"
+    MiddleClockTemp.sendCommand(temp);
+end
+
+
+rule "Calc clock Graphs"
+when
+    Time cron "0 0 * * * ?" // Every Hour
+then
+    var graph = "{ \"icon\":14038, \"line\": [" 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(22), now().minusHours(20)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(20), now().minusHours(18)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(18), now().minusHours(16)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(16), now().minusHours(14)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(14), now().minusHours(12)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(12), now().minusHours(10)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(10), now().minusHours(8)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(8),  now().minusHours(6)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(6),  now().minusHours(4)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(4),  now().minusHours(2)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().minusHours(2),  now()) as Number).intValue.toString()
+    + "]}"
+    var graphWeek = "{ \"icon\":14037, \"bar\": [" 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0).minusDays(6), now().withHour(23).withMinute(59).withSecond(59).minusDays(6)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0).minusDays(5), now().withHour(23).withMinute(59).withSecond(59).minusDays(5)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0).minusDays(4), now().withHour(23).withMinute(59).withSecond(59).minusDays(4)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0).minusDays(3), now().withHour(23).withMinute(59).withSecond(59).minusDays(3)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0).minusDays(2), now().withHour(23).withMinute(59).withSecond(59).minusDays(2)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0).minusDays(1), now().withHour(23).withMinute(59).withSecond(59).minusDays(1)) as Number).intValue.toString() + ", " 
+    + (UnterverteilerDeviceAccumulatedWatts.averageBetween(now().withHour(0).withMinute(0).withSecond(0),              now()) as Number).intValue.toString()
+    + "]}"
+
+    MiddleClockGraph.sendCommand(graph);
+    MiddleClockGraphWeek.sendCommand(graphWeek);
+end
