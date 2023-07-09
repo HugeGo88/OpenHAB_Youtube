@@ -1,0 +1,30 @@
+val telegramAction = getActions("telegram","telegram:telegramBot:Telegram_Bot")
+var long chat1 = 1234
+var long chat2 = 5678
+
+rule "Telegram Vorlauftemperatur Kessel"
+when
+    Item BoilerSystemValue3 changed
+then
+    if(BoilerSystemValue3.state < 50 && TelegramInfoSend.state == OFF){
+        telegramAction.sendTelegramPhoto("http://192.168.178.101:8080/chart?items=BoilerSystemValue12","**EVTL. STÖRUNG**\nVorlauftemperatur Kessel ist unter " + BoilerSystemValue12.state.toString() + "°C gefallen")
+        TelegramInfoSend.sendCommand( ON )
+    }
+    if(BoilerSystemValue3.state > 50){
+        TelegramInfoSend.sendCommand( OFF ) 
+    }
+end
+
+rule "Telegram get stat"
+when
+    Item TelegramBotLastMessageDate changed
+then
+    if(TelegramBotLastMessageText.state == "/status"){
+        if(TelegramBotChatId.state.toString() == chat1.toString()){
+            telegramAction.sendTelegramPhoto(chat1,"http://192.168.178.101:8080/chart?items=BoilerSystemValue12,BoilerSystemValue3","Vorlauftemperatur Kessel ist " + BoilerSystemValue12.state.toString() + "°C\nWassertemperatur oben ist " + BoilerSystemValue3.state.toString()+"°C")
+        }
+        if(TelegramBotChatId.state.toString() == chat2.toString()){
+            telegramAction.sendTelegramPhoto(chat2,"http://192.168.178.101:8080/chart?items=BoilerSystemValue12,BoilerSystemValue3","Vorlauftemperatur Kessel ist " + BoilerSystemValue12.state.toString() + "°C\nWassertemperatur oben ist " + BoilerSystemValue3.state.toString()+"°C")
+        }
+    }
+end

@@ -1,0 +1,9 @@
+String      TelegramBotLastMessageText        "Text der letzten nachricht"            {channel="telegram:telegramBot:Telegram_Bot:lastMessageText"}
+String      TelegramBotLastMessageURL         "Url der letzten nachricht"             {channel="telegram:telegramBot:Telegram_Bot:lastMessageURL"}
+DateTime    TelegramBotLastMessageDate        "Datum der letzten nachricht"           {channel="telegram:telegramBot:Telegram_Bot:lastMessageDate"}
+String      TelegramBotLastMessageName        "Absender der letzten nachricht"        {channel="telegram:telegramBot:Telegram_Bot:lastMessageName"}
+String      TelegramBotLastMessageUsername    "Benutzername der letzten nachricht"    {channel="telegram:telegramBot:Telegram_Bot:lastMessageUsername"}
+String      TelegramBotChatId                 "Chat"                                  {channel="telegram:telegramBot:Telegram_Bot:chatId"}
+String      TelegramBotReplyId                "Antwort"                               {channel="telegram:telegramBot:Telegram_Bot:replyId"}
+
+Switch      TelegramInfoSend                  "Telegram Nachricht gesendet"
